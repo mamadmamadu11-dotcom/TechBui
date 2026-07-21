@@ -20,9 +20,9 @@
 
 <div align="center">
 
-| Main Chat | Dark UI |
-|:---------:|:-------:|
-| ![Chat](screenshots/sc1.PNG) | ![Dark](screenshots/sc2.PNG) | ![Dark](screenshots/sc3.PNG) |
+| Main Chat | Dark UI | Dark1 UI |
+|:---------:|:-------:|:-------:|
+| ![Chat](screenshots/sc1.PNG) | ![Dark](screenshots/sc2.PNG) | ![Dark1](screenshots/sc3.PNG) |
 
 </div>
 
