@@ -16,6 +16,17 @@
 
 ---
 
+## 📸 Screenshots          ← این بخش رو اضافه کن
+
+<div align="center">
+
+| Main Chat | Dark UI |
+|:---------:|:-------:|
+| ![Chat](screenshots/sc1.PNG) | ![Dark](screenshots/sc2.PNG) | ![Dark](screenshots/sc3.PNG) |
+
+</div>
+
+
 ## ✨ Features
 
 - 🎨 **Premium Dark UI** with Glassmorphism & Neon Accents
