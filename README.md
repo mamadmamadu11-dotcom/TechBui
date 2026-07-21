@@ -55,29 +55,33 @@
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository:
 ```bash
 git clone https://github.com/mamadmamadu11-dotcom/TechBui.git
 cd TechBui
-Open in Visual Studio 2022
+```
 
-text
+2. Open in Visual Studio 2022:
+```
 Open TechBui.sln
-Build & Run
+```
 
-text
+3. Build and Run:
+```
 Build > Rebuild Solution
 Press F5 to run
-Get API Key
+```
 
-Visit freemodel.dev
+4. Get API Key:
+- Visit [freemodel.dev](https://freemodel.dev)
+- Sign up and create an API key (starts with `fe_oa_`)
+- Enter the key in the app
 
-Sign up and create an API key (starts with fe_oa_)
+---
 
-Enter the key in the app
+## 🏗️ Project Structure
 
-🏗️ Project Structure
-text
+```
 TechBui/
 ├── Models/
 │   └── ChatMessage.cs          # Data models
@@ -98,37 +102,54 @@ TechBui/
 ├── App.xaml                    # App resources
 ├── MauiProgram.cs              # DI configuration
 └── TechBui.csproj              # Project config
-🎨 Customization
-Change Color Theme
-Edit in MainPage.xaml:
+```
 
-xml
+---
+
+## 🎨 Customization
+
+### Change Color Theme
+Edit in `MainPage.xaml`:
+```xml
 <GradientStop Color="#36E4F4" Offset="0.0"/>  <!-- Cyan -->
 <GradientStop Color="#6C5CE7" Offset="1.0"/>  <!-- Purple -->
-Change AI Model Priority
-Edit in Services/ChatService.cs:
+```
 
-csharp
+### Change AI Model Priority
+Edit in `Services/ChatService.cs`:
+```csharp
 private readonly string[] _modelFallbackList = new string[]
 {
     "claude-sonnet-5",
     "claude-sonnet-4-6",
     // Add more models...
 };
-👨‍💻 Author
-MohammadReza Ghanbari
+```
 
-https://img.shields.io/badge/Instagram-@techbui-E4405F?style=flat&logo=instagram&logoColor=white
-https://img.shields.io/badge/Email-mamadmamadu11@gmail.com-D14836?style=flat&logo=gmail&logoColor=white
-https://img.shields.io/badge/Phone-09930533371-25D366?style=flat&logo=whatsapp&logoColor=white
+---
 
-📝 License
-MIT License - see LICENSE file
+## 👨‍💻 Author
 
-⭐ Support
-If you like this project, give it a star ⭐ and share it!
+**MohammadReza Ghanbari**
+
+[![Instagram](https://img.shields.io/badge/Instagram-@techbui-E4405F?style=flat&logo=instagram&logoColor=white)](https://instagram.com/techbui)
+[![Email](https://img.shields.io/badge/Email-mamadmamadu11@gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:mamadmamadu11@gmail.com)
+[![Phone](https://img.shields.io/badge/Phone-09930533371-25D366?style=flat&logo=whatsapp&logoColor=white)](tel:09930533371)
+
+---
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a **star** ⭐ and share it!
 
 <div align="center">
-Built with ❤️ for the developer community
+
+**Built with ❤️ for the developer community**
 
 </div>
