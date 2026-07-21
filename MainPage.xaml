@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TechBui.ViewModels"
+             xmlns:models="clr-namespace:TechBui.Models"
+             x:Class="TechBui.MainPage"
+             x:DataType="viewmodels:ChatViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#08121F"
+             FlowDirection="RightToLeft">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto"
+          Padding="0"
+          RowSpacing="0">
+
+        <!-- ========== هدر ثابت ========== -->
+        <Grid Grid.Row="0"
+              HeightRequest="72"
+              Padding="16,10"
+              ColumnDefinitions="Auto,*,Auto"
+              IsVisible="True">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23334D" Offset="0.0"/>
+                    <GradientStop Color="#6C5CE7" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <!-- لوگو -->
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 16"
+                    Stroke="#23334D"
+                    BackgroundColor="Transparent"
+                    Padding="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                <Image Source="logo.png"
+                       Aspect="AspectFit"
+                       WidthRequest="44"
+                       HeightRequest="44"/>
+            </Border>
+
+            <!-- عنوان -->
+            <VerticalStackLayout Grid.Column="1"
+                                 VerticalOptions="Center"
+                                 Margin="10,0,0,0">
+                <Label Text="TechBui"
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <HorizontalStackLayout Spacing="5">
+                    <Image Source="bolt.svg"
+                           WidthRequest="10"
+                           HeightRequest="10"
+                           VerticalOptions="Center"/>
+                    <Label Text="{Binding StatusText}"
+                           TextColor="#9FB3C8"
+                           FontSize="11"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- دکمه پاکسازی -->
+            <Border Grid.Column="2"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#23334D"
+                    BackgroundColor="#23334D"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Padding="0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+                <ImageButton Source="trashcan.svg"
+                             BackgroundColor="Transparent"
+                             WidthRequest="40"
+                             HeightRequest="40"
+                             Padding="10"
+                             Command="{Binding ClearChatCommand}"/>
+            </Border>
+        </Grid>
+
+        <!-- ========== بخش کلید API ========== -->
+        <Border Grid.Row="1"
+                Stroke="#23334D"
+                BackgroundColor="#0F172A"
+                Padding="14,12">
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="12">
+                <Image Grid.Column="0"
+                       Source="key.svg"
+                       WidthRequest="20"
+                       HeightRequest="20"
+                       VerticalOptions="Center"/>
+
+                <Entry Grid.Column="1" 
+                       Text="{Binding ApiKey}"
+                       Placeholder="کلید API ..."
+                       FontSize="13"
+                       IsPassword="True"
+                       ClearButtonVisibility="WhileEditing"
+                       BackgroundColor="#162033"
+                       TextColor="White"
+                       PlaceholderColor="#6B7B93"
+                       ReturnType="Done"
+                       FlowDirection="RightToLeft"/>
+
+                <Button Grid.Column="2"
+                        Text="ذخیره"
+                        BackgroundColor="#36E4F4"
+                        TextColor="#08121F"
+                        CornerRadius="10"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        HeightRequest="38"
+                        Padding="18,0"
+                        Command="{Binding SaveApiKeyCommand}"
+                        FlowDirection="RightToLeft"/>
+            </Grid>
+        </Border>
+
+        <!-- ========== بنر خطا ========== -->
+        <Border Grid.Row="2"
+                BackgroundColor="#3D1A28"
+                Stroke="#FF5A7A"
+                StrokeThickness="1"
+                Padding="14,10"
+                IsVisible="{Binding HasError}"
+                VerticalOptions="Start"
+                ZIndex="10">
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="12">
+                <Image Grid.Column="0"
+                       Source="circleexclamation.svg"
+                       WidthRequest="18"
+                       HeightRequest="18"
+                       VerticalOptions="Center"/>
+
+                <Label Grid.Column="1"
+                       Text="{Binding ErrorMessage}"
+                       TextColor="#FF5A7A"
+                       FontSize="12"
+                       VerticalOptions="Center"
+                       LineBreakMode="WordWrap"/>
+
+                <Button Grid.Column="2"
+                        Text="تلاش مجدد"
+                        BackgroundColor="#FF5A7A"
+                        TextColor="White"
+                        CornerRadius="6"
+                        FontSize="11"
+                        HeightRequest="32"
+                        Padding="14,0"
+                        Command="{Binding RetryCommand}"/>
+            </Grid>
+        </Border>
+
+        <!-- ========== لیست پیام‌ها ========== -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Messages}"
+                        Margin="0,8,0,0"
+                        x:Name="MessagesCollection"
+                        ItemsUpdatingScrollMode="KeepLastItemInView"
+                        FlowDirection="RightToLeft"
+                        BackgroundColor="Transparent">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ChatMessage"
+                              xmlns:models="clr-namespace:TechBui.Models">
+                    <Grid Padding="16,6"
+                          ColumnDefinitions="*">
+
+                        <!-- پیام کاربر -->
+                        <Frame Grid.Column="0"
+                               CornerRadius="24"
+                               Padding="16,14"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               HorizontalOptions="End"
+                               MaximumWidthRequest="300"
+                               Margin="60,4,0,4"
+                               IsVisible="{Binding IsUser}">
+                            <Frame.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#36E4F4" Offset="0.0"/>
+                                    <GradientStop Color="#22D3EE" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                            <Frame.Shadow>
+                                <Shadow Brush="#36E4F4" Offset="0,4" Radius="16" Opacity="0.15"/>
+                            </Frame.Shadow>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Content}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"/>
+                                <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}"
+                                       TextColor="#CCF0FF"
+                                       FontSize="10"
+                                       HorizontalOptions="End"
+                                       Margin="0,6,0,0"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- پیام AI -->
+                        <Frame Grid.Column="0"
+                               BackgroundColor="#162033"
+                               CornerRadius="24"
+                               Padding="16,14"
+                               HasShadow="True"
+                               BorderColor="#24354D"
+                               HorizontalOptions="Start"
+                               MaximumWidthRequest="300"
+                               Margin="0,4,60,4"
+                               IsVisible="{Binding IsUser, Converter={StaticResource InvertBoolConverter}}">
+                            <Frame.Shadow>
+                                <Shadow Brush="#000000" Offset="0,4" Radius="16" Opacity="0.15"/>
+                            </Frame.Shadow>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Content}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"/>
+                                <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}"
+                                       TextColor="#9FB3C8"
+                                       FontSize="10"
+                                       HorizontalOptions="Start"
+                                       Margin="0,6,0,0"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- ========== نشانگر بارگذاری ========== -->
+        <HorizontalStackLayout Grid.Row="2"
+                               HorizontalOptions="Center"
+                               VerticalOptions="End"
+                               Margin="0,0,0,14"
+                               Spacing="8"
+                               IsVisible="{Binding IsBusy}"
+                               ZIndex="5">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               Color="#36E4F4"
+                               WidthRequest="18"
+                               HeightRequest="18"/>
+            <Label Text="در حال دریافت پاسخ..."
+                   TextColor="#9FB3C8"
+                   FontSize="12"/>
+        </HorizontalStackLayout>
+
+        <!-- ========== نوار ورودی ========== -->
+        <Grid Grid.Row="3"
+              BackgroundColor="#0F172A"
+              Padding="16,14"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="12"
+              FlowDirection="RightToLeft">
+
+            <Frame Grid.Column="0"
+                   BackgroundColor="#162033"
+                   CornerRadius="28"
+                   Padding="4"
+                   HasShadow="False"
+                   BorderColor="#24354D"
+                   HeightRequest="56">
+                <Entry Text="{Binding UserMessage}"
+                       Placeholder="پیام خود را بنویسید..."
+                       FontSize="14"
+                       BackgroundColor="Transparent"
+                       TextColor="White"
+                       PlaceholderColor="#6B7B93"
+                       ReturnType="Send"
+                       ReturnCommand="{Binding SendMessageCommand}"
+                       ClearButtonVisibility="WhileEditing"
+                       Margin="14,0"
+                       FlowDirection="RightToLeft"/>
+            </Frame>
+
+            <!-- دکمه ارسال -->
+            <Border Grid.Column="1"
+                    StrokeShape="RoundRectangle 28"
+                    Stroke="Transparent"
+                    BackgroundColor="Transparent"
+                    WidthRequest="56"
+                    HeightRequest="56"
+                    Padding="0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#36E4F4" Offset="0.0"/>
+                        <GradientStop Color="#6C5CE7" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.Shadow>
+                    <Shadow Brush="#36E4F4" Offset="0,4" Radius="24" Opacity="0.4"/>
+                </Border.Shadow>
+                <ImageButton Source="paperplane.svg"
+                             BackgroundColor="Transparent"
+                             WidthRequest="56"
+                             HeightRequest="56"
+                             Padding="16"
+                             Command="{Binding SendMessageCommand}"
+                             IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolConverter}}"/>
+            </Border>
+        </Grid>
+    </Grid>
+
+</ContentPage>
