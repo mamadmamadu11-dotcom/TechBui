@@ -16,7 +16,7 @@
 
 ---
 
-## 📸 Screenshots          ← این بخش رو اضافه کن
+## 📸 Screenshots         
 
 <div align="center">
 
